@@ -1,7 +1,7 @@
 'use strict'
 
 var computerScores = 0;
-var scoreMaximum = 10;
+var maxScores = 10;
 var playerScores = 0;
 var output = document.getElementById('output');
 var scores = document.getElementById('scores');
@@ -9,13 +9,14 @@ var rockBtn = document.getElementById('rock');
 var paperBtn = document.getElementById('paper');
 var scissorsBtn = document.getElementById('scissors');
 var newGameBtn = document.getElementById('new-game');
+var maxScoreDisp = document.getElementById('max-scores');
 
 var playerMove = function () {
     var playerMove = this.id;
     var roundResult;
     var computerMove = getComputerMove();
 
-    if (playerScores === scoreMaximum || computerScores === scoreMaximum) {
+    if (playerScores === maxScores || computerScores === maxScores) {
         finishGame();
     } else {
         if (playerMove === computerMove) {
@@ -56,6 +57,9 @@ var displayResults = function (playerMove, computerMove, result) {
 function startGame() {
     playerScores = 0;
     computerScores = 0;
+    maxScores = parseInt(window.prompt('Enter number of credits...'));
+    maxScores = isNaN(maxScores) ? 10 : maxScores;
+    maxScoreDisp.textContent = maxScores;
     scores.textContent = playerScores + ' - ' + computerScores;
     output.textContent = '';
 }
