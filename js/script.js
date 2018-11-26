@@ -41,11 +41,13 @@ var getComputerMove = function () {
 
 var displayResults = function (playerMove, computerMove, result) {
     var output = document.getElementById('output');
-    
+    var scores = document.getElementById('scores');
+
     output.textContent = result.toUpperCase() + ':'
         + ' You played ' + playerMove.toUpperCase()
         + ', computer played '
         + computerMove.toUpperCase();
+    scores.textContent = playerScores + '-' + computerScores;
 }
 
 paperBtn.addEventListener('click', playerMove);
