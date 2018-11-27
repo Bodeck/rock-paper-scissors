@@ -79,3 +79,4 @@ typings/
 .dynamodb/ 
 
 .sass-cache/
+.vscode/
