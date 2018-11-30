@@ -13,7 +13,7 @@ var maxScoreDisp = document.getElementById('max-scores');
 
 setDefaults();
 
-var playerMove = function () {
+var playerMove = function (event) {
     var playerMove;
     var roundResult;
     var computerMove;
@@ -21,7 +21,7 @@ var playerMove = function () {
     if (playerScores === maxScores || computerScores === maxScores) {
         finishGame();
     } else {
-        playerMove = this.id;
+        playerMove = event.currentTarget.dataset.userMove;
         computerMove = getComputerMove();
         roundResult = playRound(playerMove, computerMove, roundResult);
         displayResults(playerMove, computerMove, roundResult);
