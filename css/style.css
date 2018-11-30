@@ -8,4 +8,6 @@ button { color: #fff; background-color: #02ac46; border: 2px solid #02ac46; bord
 
 .displays { color: #02ac46; font-size: 16px; text-align: center; margin: 5px; }
 
+.displays span { text-transform: uppercase; }
+
 #max-scores { display: inline-block; font-size: 20px; }

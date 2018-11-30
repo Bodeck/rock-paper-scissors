@@ -34,10 +34,10 @@ function getComputerMove() {
 }
 
 function displayResults(userMove, computerMove, result) {
-    output.textContent = result.toUpperCase() + ':'
-        + ' You played ' + userMove.toUpperCase()
+    output.innerHTML = '<span>' + result + '</span> :'
+        + '  You played <span>' + userMove + '</span>'
         + ', computer played '
-        + computerMove.toUpperCase();
+        + '<span>' + computerMove + '</span>';
 }
 
 function checkRoundResults(userMove, computerMove) {
@@ -71,7 +71,10 @@ function startGame() {
 }
 
 function finishGame() {
-    output.innerHTML += playerScores > computerScores ? '<br> You won the entire game!' : '<br> You lost entire game!'
+    // output.innerHTML += playerScores > computerScores ? '<p> You won the entire game! </p>' : '<p> You lost entire game! </p>';
+    var par = document.createElement('p');
+    par.innerText = playerScores > computerScores ? 'You won the entire game!' : 'You lost entire game!';
+    output.append(par);
 }
 
 function setDefaults () {
