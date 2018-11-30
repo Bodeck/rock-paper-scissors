@@ -13,48 +13,41 @@ var maxScoreDisp = document.getElementById('max-scores');
 
 setDefaults();
 
-var playerMove = function (event) {
-    var playerMove;
+function playerMove(event) {
+    var userMove;
     var roundResult;
     var computerMove;
 
     if (playerScores === maxScores || computerScores === maxScores) {
         finishGame();
     } else {
-        playerMove = event.currentTarget.dataset.userMove;
+        userMove = event.currentTarget.dataset.userMove;
         computerMove = getComputerMove();
-        roundResult = playRound(playerMove, computerMove, roundResult);
-        displayResults(playerMove, computerMove, roundResult);
+        roundResult = checkRoundResults(userMove, computerMove);
+        displayResults(userMove, computerMove, roundResult);
         displayScores();
     }
 }
 
-var getComputerMove = function () {
-    var rdmNum = Math.ceil(Math.random() * 3);
-    if (rdmNum === 1) {
-        return 'paper'
-    } else if (rdmNum === 2) {
-        return 'scissors'
-    } else {
-        return 'rock'
-    }
-
+function getComputerMove() {
+    return ['paper','scissors','rock'][parseInt(Math.random() * 3)];
 }
 
-var displayResults = function (playerMove, computerMove, result) {
+function displayResults(userMove, computerMove, result) {
     output.textContent = result.toUpperCase() + ':'
-        + ' You played ' + playerMove.toUpperCase()
+        + ' You played ' + userMove.toUpperCase()
         + ', computer played '
         + computerMove.toUpperCase();
 }
 
-function playRound(playerMove, computerMove, roundResult) {
-    if (playerMove === computerMove) {
+function checkRoundResults(userMove, computerMove) {
+    var roundResult;
+    if (userMove === computerMove) {
         roundResult = 'draw';
     }
-    else if (playerMove === 'rock' && computerMove === 'scissors' ||
-        playerMove === 'paper' && computerMove === 'rock' ||
-        playerMove === 'scissors' && computerMove === 'paper') {
+    else if (userMove === 'rock' && computerMove === 'scissors' ||
+        userMove === 'paper' && computerMove === 'rock' ||
+        userMove === 'scissors' && computerMove === 'paper') {
         roundResult = 'You won';
         playerScores++;
     }
@@ -75,7 +68,6 @@ function startGame() {
     maxScores = parseInt(window.prompt('Enter number of credits...'));
     maxScores = isNaN(maxScores) ? 10 : maxScores;
     setDefaults();
-
 }
 
 function finishGame() {
