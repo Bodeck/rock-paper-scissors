@@ -12,9 +12,13 @@ var params = {
     roundsCount: 0
 }
 
+var modalCloseBtns = document.querySelectorAll('.close');
+var playerButtons = document.querySelectorAll('.player-move');
+var modalOverlay = document.querySelector('.modal-overlay');
+var modals = document.querySelectorAll('.modal');
 
 setDefaults();
-var playerButtons = document.querySelectorAll('.player-move');
+
 playerButtons.forEach(function (button) {
     button.addEventListener('click', function (event) {
         var move = event.currentTarget.getAttribute('data-user-move');
@@ -22,6 +26,19 @@ playerButtons.forEach(function (button) {
         playerMove(move);
     });
 })
+
+modalCloseBtns.forEach(function(btn){
+    btn.addEventListener('click', closeModal);
+})
+
+modalOverlay.addEventListener('click', closeModal);
+
+modals.forEach(function(modal) {
+    modal.addEventListener('click', function(event) {
+        event.stopPropagation();
+    })
+})
+
 function playerMove(move) {
     var roundResult;
     var computerMove;
@@ -78,10 +95,11 @@ function startGame() {
 }
 
 function finishGame() {
-    // output.innerHTML += playerScores > computerScores ? '<p> You won the entire game! </p>' : '<p> You lost entire game! </p>';
-    var par = document.createElement('p');
-    par.innerText = params.playerScores > params.computerScores ? 'You won the entire game!' : 'You lost entire game!';
-    output.append(par);
+    var modal = document.querySelector('#game-results');
+    var msg = params.playerScores > params.computerScores ? 'You won the entire game!' : 'You lost entire game!';
+    modal.querySelector('header').textContent = msg;
+    modal.classList.add('display');
+    modal.parentElement.classList.add('display');
 }
 
 function setDefaults() {
@@ -90,4 +108,12 @@ function setDefaults() {
     output.textContent = 'Click one of buttons to start game';
 }
 
+function closeModal() {
+    var overlay = document.querySelector('.modal-overlay')
+    overlay.classList.remove('display');
+    var modals = document.querySelectorAll('.modal');
+    modals.forEach(function(modal) {
+        modal.classList.remove('display');
+    })
+}
 newGameBtn.addEventListener('click', startGame);

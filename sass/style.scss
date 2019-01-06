@@ -41,3 +41,50 @@ button {
       display: inline-block;
       font-size: 20px;
   }
+
+  .modal-overlay {
+      background-color: rgba($color: #000000, $alpha: 0.5);
+      display: none;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      z-index: 1;
+   
+    }
+    
+    .modal {
+        display: none;
+        background: #fff;
+        border-radius: 5px;
+        width: 500px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate3d(-50%, -50%, 0);
+    
+        .close {
+          position: absolute;
+          right: 0;
+          top: 0;
+          padding: 5px;
+          color: #000;
+          text-decoration: none;
+          font-size: 1.5em;
+      } 
+      header {
+          text-align: center;
+          font-weight: bold;
+          padding: 10px;
+      }
+      .modal-content {
+          padding: 10px;
+      }
+  }
+  
+.display {
+    display: block;
+}
+
+
+
