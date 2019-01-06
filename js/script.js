@@ -9,7 +9,8 @@ var params = {
     playerScores: 0,
     computerScores: 0,
     maxScores: 10,
-    roundsCount: 0
+    roundsCount: 0,
+    progress: []
 }
 
 var modalCloseBtns = document.querySelectorAll('.close');
@@ -27,29 +28,38 @@ playerButtons.forEach(function (button) {
     });
 })
 
-modalCloseBtns.forEach(function(btn){
+modalCloseBtns.forEach(function (btn) {
     btn.addEventListener('click', closeModal);
 })
 
 modalOverlay.addEventListener('click', closeModal);
 
-modals.forEach(function(modal) {
-    modal.addEventListener('click', function(event) {
+modals.forEach(function (modal) {
+    modal.addEventListener('click', function (event) {
         event.stopPropagation();
     })
 })
 
 function playerMove(move) {
-    var roundResult;
-    var computerMove;
+    var round = {
+        roundNum: 0,
+        move: '',
+        computerMove: '',
+        roundResult: '',
+        gameScores: ''
+    }
     if (params.playerScores === params.maxScores || params.computerScores === params.maxScores) {
         finishGame();
     } else {
-        computerMove = getComputerMove();
-        roundResult = checkRoundResults(move, computerMove);
-        displayResults(move, computerMove, roundResult);
+        round.move = move;
+        round.computerMove = getComputerMove();
+        round.roundResult = checkRoundResults(round.move, round.computerMove);
+        displayResults(round);
         displayScores();
         params.roundsCount++;
+        round.roundNum = params.roundsCount;
+        round.gameScores = params.playerScores + '-' + params.computerScores;
+        params.progress.push(round);
     }
 }
 
@@ -57,11 +67,11 @@ function getComputerMove() {
     return ['paper', 'scissors', 'rock'][parseInt(Math.random() * 3)];
 }
 
-function displayResults(userMove, computerMove, result) {
-    output.innerHTML = '<span>' + result + '</span> :'
-        + '  You played <span>' + userMove + '</span>'
+function displayResults(round) {
+    output.innerHTML = '<span>' + round.roundResult + '</span> :'
+        + '  You played <span>' + round.move + '</span>'
         + ', computer played '
-        + '<span>' + computerMove + '</span>';
+        + '<span>' + round.computerMove + '</span>';
 }
 
 function checkRoundResults(userMove, computerMove) {
@@ -87,33 +97,61 @@ function displayScores() {
 }
 
 function startGame() {
-    params.playerScores = 0;
-    params.computerScores = 0;
     var maxScores = parseInt(window.prompt('Enter number of credits...'));
     params.maxScores = isNaN(maxScores) ? 10 : maxScores;
+    document.querySelector('#scores-table tbody').remove();
     setDefaults();
 }
 
 function finishGame() {
     var modal = document.querySelector('#game-results');
-    var msg = params.playerScores > params.computerScores ? 'You won the entire game!' : 'You lost entire game!';
-    modal.querySelector('header').textContent = msg;
-    modal.classList.add('display');
-    modal.parentElement.classList.add('display');
+    if (!modal.querySelector('tbody')) {
+        var msg = params.playerScores > params.computerScores ? 'You won the entire game!' : 'You lost entire game!';
+        modal.querySelector('header').textContent = msg;
+        var table = modal.querySelector('#scores-table')
+        var tableBody = populateTable(params.progress);
+        table.append(tableBody);
+    }
+    displayModal('#game-results');
 }
 
 function setDefaults() {
+    params.playerScores = 0;
+    params.computerScores = 0;
+    params.progress = [];
+    params.roundsCount = 0,
     displayScores();
     maxScoreDisp.textContent = params.maxScores;
     output.textContent = 'Click one of buttons to start game';
+}
+
+function populateTable(dataArr) {
+    var tbl = document.createElement('tbody');
+    dataArr.forEach(function (round) {
+        var tblRow = document.createElement('tr');
+        for (var prop in round) {
+            var tData = document.createElement('td');
+            tData.innerText = round[prop];
+            tblRow.appendChild(tData);
+        }
+        tbl.appendChild(tblRow);
+    })
+    return tbl
 }
 
 function closeModal() {
     var overlay = document.querySelector('.modal-overlay')
     overlay.classList.remove('display');
     var modals = document.querySelectorAll('.modal');
-    modals.forEach(function(modal) {
+    modals.forEach(function (modal) {
         modal.classList.remove('display');
     })
 }
+
+function displayModal(modId) {
+    var modal = document.querySelector(modId);
+    modal.parentElement.classList.add('display');
+    modal.classList.add('display');
+}
+
 newGameBtn.addEventListener('click', startGame);

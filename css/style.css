@@ -64,6 +64,8 @@ button {
   left: 50%;
   -webkit-transform: translate3d(-50%, -50%, 0);
           transform: translate3d(-50%, -50%, 0);
+  max-height: 90%;
+  overflow: hidden;
 }
 
 .modal .close {
@@ -84,6 +86,12 @@ button {
 
 .modal .modal-content {
   padding: 10px;
+}
+
+.modal table {
+  display: table;
+  overflow-y: auto;
+  width: 100%;
 }
 
 .display {

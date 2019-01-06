@@ -62,23 +62,29 @@ button {
         top: 50%;
         left: 50%;
         transform: translate3d(-50%, -50%, 0);
-    
+        max-height: 90%;
+        overflow: hidden;
         .close {
-          position: absolute;
-          right: 0;
-          top: 0;
-          padding: 5px;
-          color: #000;
-          text-decoration: none;
-          font-size: 1.5em;
-      } 
-      header {
-          text-align: center;
-          font-weight: bold;
-          padding: 10px;
-      }
-      .modal-content {
-          padding: 10px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 5px;
+            color: #000;
+            text-decoration: none;
+            font-size: 1.5em;
+        } 
+        header {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+        }
+        .modal-content {
+            padding: 10px;
+        }
+        table {
+            display: table;
+            overflow-y: auto;
+            width: 100%;
       }
   }
   
