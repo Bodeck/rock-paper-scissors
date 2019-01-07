@@ -29,7 +29,7 @@ button {
     margin: 2px;
 }
 
-.displays {
+.info-container {
     color: $font-color;
     font-size: 16px;
     text-align: center;
@@ -83,11 +83,16 @@ button {
         }
         .modal-content {
             padding: 10px;
+            height: 100%;
         }
         table {
             display: table;
-            overflow-y: auto;
+            overflow-y: scroll;
             width: 100%;
+            height: 200px;
+            td:last-child {
+                text-align: center;
+            }
       }
       .input-wrap {
           display: flex;

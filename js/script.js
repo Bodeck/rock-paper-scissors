@@ -1,16 +1,19 @@
 'use strict'
 
-var output = document.getElementById('output');
-var scores = document.getElementById('scores');
+var resultsDisp = document.getElementById('message');
 var newGameBtn = document.getElementById('new-game');
-var maxScoreDisp = document.getElementById('max-scores');
+var maxScoreDisp = document.getElementById('max-scores-output');
+var playScoresDisp = document.getElementById('player-scores-output');
+var compScoresDisp = document.getElementById('comp-scores-output');
+
 
 var params = {
     playerScores: 0,
     computerScores: 0,
     maxScores: 10,
     roundsCount: 0,
-    progress: []
+    progress: [],
+    playerName: 'Player'
 }
 
 var modalCloseBtns = document.querySelectorAll('.close');
@@ -75,41 +78,43 @@ function getComputerMove() {
 }
 
 function displayResults(round) {
-    output.innerHTML = '<span>' + round.roundResult + '</span> :'
-        + '  You played <span>' + round.move + '</span>'
-        + ', computer played '
-        + '<span>' + round.computerMove + '</span>';
+    var msgText = round.roundResult + ': '; 
+    msgText += params.playerName + ' played ' + round.move + ', ';
+    msgText +=  'computer played ' + round.computerMove;
+    resultsDisp.innerText = msgText;
 }
 
 function checkRoundResults(userMove, computerMove) {
     var roundResult;
     if (userMove === computerMove) {
-        roundResult = 'draw';
+        roundResult = 'Draw';
     }
     else if (userMove === 'rock' && computerMove === 'scissors' ||
         userMove === 'paper' && computerMove === 'rock' ||
         userMove === 'scissors' && computerMove === 'paper') {
-        roundResult = 'You won';
+        roundResult = params.playerName + ' won';
         params.playerScores++;
     }
     else {
-        roundResult = 'You lost';
+        roundResult = params.playerName + ' lost';
         params.computerScores++;
     }
     return roundResult;
 }
 
 function displayScores() {
-    scores.textContent = params.playerScores + '-' + params.computerScores;
+    playScoresDisp.innerText = params.playerScores;
+    compScoresDisp.innerText = params.computerScores;
 }
 
 function startGame() {
-    var maxScoresInput = document.querySelector('#max-scores');
-    var playerNameInput = document.querySelector('#player-name');
-    params.maxScores = isNaN(maxScoresInput.value) ? 10 : maxScoresInput.value;
-    removeTable('#scores-table tbody');
-    setDefaults();
+    var maxScoresInput = document.querySelector('input#max-scores');
+    var playerNameInput = document.querySelector('input#player-name');
+    params.maxScores = parseInt(maxScoresInput.value);
+    params.playerName = playerNameInput.value;
     closeModal('#max-scores');
+    clearTable('#scores-table tbody');
+    setDefaults();
 }
 
 function finishGame() {
@@ -131,10 +136,10 @@ function setDefaults() {
     params.roundsCount = 0,
     displayScores();
     maxScoreDisp.textContent = params.maxScores;
-    output.textContent = 'Click one of buttons to start game';
+    resultsDisp.textContent = 'Click one of buttons to start game';
 }
 
-function removeTable(selector) {
+function clearTable(selector) {
     var el = document.querySelector(selector);
     if(el) {
         el.remove();

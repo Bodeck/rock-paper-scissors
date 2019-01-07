@@ -11,13 +11,15 @@
     <div class="container">
         <div>
             <button id="new-game">New Game</button>
-            <div class="displays">Scores to win: <span id="max-scores"></span></div>
+            <div class="info-container">Scores to win: <span id="max-scores-output"></span></div>
         </div>
         <button class="player-move" id="rock" data-user-move="rock">Rock</button>
         <button class="player-move" id="paper" data-user-move="paper">Paper</button>
         <button class="player-move" id="scissors" data-user-move="scissors">Scissors</button>
-        <div id="scores" class="displays"></div>
-        <div id="output" class="displays"></div>
+        <div id="scores" class="info-container">
+                <span id="player-scores-output">0</span>-<span id="comp-scores-output">0</span>
+        </div>
+        <div id="message" class="info-container"></div>
     </div>
     <div class="modal-overlay">
         <div class="modal" id="game-results">
@@ -43,11 +45,11 @@
             <div class="modal-content">
                 <div class="input-wrap">
                     <label for="player-name">Your name:</label>
-                    <input type="text" name="player-name" id="player-name">
+                    <input type="text" name="player-name" id="player-name" value="Player">
                 </div>
                 <div class="input-wrap">
                     <label for="max-scores">Scores to win:</label>
-                    <input type="number" name="max-scores" id="max-scores">
+                    <input type="number" name="max-scores" id="max-scores" min="1" value="10">
                 </div>
                 <button id="start-game">Start Game</button>
             </div>
