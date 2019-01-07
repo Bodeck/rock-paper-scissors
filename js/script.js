@@ -17,8 +17,15 @@ var modalCloseBtns = document.querySelectorAll('.close');
 var playerButtons = document.querySelectorAll('.player-move');
 var modalOverlay = document.querySelector('.modal-overlay');
 var modals = document.querySelectorAll('.modal');
-
+var startGameBtn = document.querySelector('#start-game');
 setDefaults();
+
+// newGameBtn.addEventListener('click', startGame);
+newGameBtn.addEventListener('click', function(){
+    displayModal("#new-game-modal")
+});
+
+startGameBtn.addEventListener('click', startGame);
 
 playerButtons.forEach(function (button) {
     button.addEventListener('click', function (event) {
@@ -97,10 +104,12 @@ function displayScores() {
 }
 
 function startGame() {
-    var maxScores = parseInt(window.prompt('Enter number of credits...'));
-    params.maxScores = isNaN(maxScores) ? 10 : maxScores;
-    document.querySelector('#scores-table tbody').remove();
+    var maxScoresInput = document.querySelector('#max-scores');
+    var playerNameInput = document.querySelector('#player-name');
+    params.maxScores = isNaN(maxScoresInput.value) ? 10 : maxScoresInput.value;
+    removeTable('#scores-table tbody');
     setDefaults();
+    closeModal('#max-scores');
 }
 
 function finishGame() {
@@ -125,6 +134,12 @@ function setDefaults() {
     output.textContent = 'Click one of buttons to start game';
 }
 
+function removeTable(selector) {
+    var el = document.querySelector(selector);
+    if(el) {
+        el.remove();
+    }
+}
 function populateTable(dataArr) {
     var tbl = document.createElement('tbody');
     dataArr.forEach(function (round) {
@@ -154,4 +169,3 @@ function displayModal(modId) {
     modal.classList.add('display');
 }
 
-newGameBtn.addEventListener('click', startGame);

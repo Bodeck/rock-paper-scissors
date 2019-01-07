@@ -28,13 +28,28 @@
                     <thead>
                         <tr>
                             <td>Round</td>
-                            <td>Player</td>
-                            <td>Computer</td>
+                            <td>Player Move</td>
+                            <td>Computer Move</td>
                             <td>Results</td>
                             <td>Total Scores</td>
                         </tr>
                     </thead>
                 </table>
+            </div>
+        </div>
+        <div class="modal" id="new-game-modal">
+            <a href="#" class="close">&#215;</a>
+            <header class="modal-header">New Game</header>
+            <div class="modal-content">
+                <div class="input-wrap">
+                    <label for="player-name">Your name:</label>
+                    <input type="text" name="player-name" id="player-name">
+                </div>
+                <div class="input-wrap">
+                    <label for="max-scores">Scores to win:</label>
+                    <input type="number" name="max-scores" id="max-scores">
+                </div>
+                <button id="start-game">Start Game</button>
             </div>
         </div>
     </div>
