@@ -23,7 +23,6 @@ var modals = document.querySelectorAll('.modal');
 var startGameBtn = document.querySelector('#start-game');
 setDefaults();
 
-// newGameBtn.addEventListener('click', startGame);
 newGameBtn.addEventListener('click', function(){
     displayModal("#new-game-modal")
 });
@@ -32,8 +31,8 @@ startGameBtn.addEventListener('click', startGame);
 
 playerButtons.forEach(function (button) {
     button.addEventListener('click', function (event) {
-        var move = event.currentTarget.getAttribute('data-user-move');
-        //alternative: var move = event.currentTarget.dataset.userMove;
+        var move = event.currentTarget.dataset.userMove;
+        //alternative: var move = event.currentTarget.getAttribute('data-user-move');
         playerMove(move);
     });
 })
